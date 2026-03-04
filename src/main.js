@@ -27,7 +27,7 @@ class Explosion {
   }
   update() {
     this.timer++;
-    if (this.timer % 5 === 0) {
+    if (this.timer % 6 === 0) {
       this.frame++;
     }
     // this.frame++;
@@ -53,15 +53,18 @@ window.addEventListener("click", (e) => {
   let posY = e.y - canvasPosition.top;
 
   explosions.push(new Explosion(posX, posY));
-
   console.log(explosions);
 });
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  explosions.forEach((explosion) => {
+  explosions.forEach((explosion, i) => {
     explosion.update();
     explosion.draw();
+    if (explosion.frame > 6) {
+      explosions.splice(i, 1);
+    }
+    console.log(explosions);
   });
   requestAnimationFrame(animate);
 }
